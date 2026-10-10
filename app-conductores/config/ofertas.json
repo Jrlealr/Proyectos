@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "habilitadas": false,
+  "etiqueta": "Patrocinado",
+  "ofertas": [
+    {
+      "id": "soap_compra",
+      "habilitada": false,
+      "ubicacion": "alerta_vencimiento",
+      "documento": "soap",
+      "disparador": { "diasAntesVencimiento": 30, "incluirVencido": true },
+      "texto": "Comprar SOAP",
+      "urlDestino": null,
+      "datosCompartidos": ["patente", "tipoVehiculo"]
+    },
+    {
+      "id": "seguro_cotizacion",
+      "habilitada": false,
+      "ubicacion": "ficha_vehiculo",
+      "disparador": { "sinSeguroVoluntario": true },
+      "texto": "Cotizar seguro",
+      "urlDestino": null,
+      "datosCompartidos": ["patente", "marca", "modelo", "anio"]
+    },
+    {
+      "id": "abogado_parte",
+      "habilitada": false,
+      "ubicacion": "registro_parte",
+      "disparador": { "parteRegistrado": true },
+      "texto": "Que un abogado lo revise",
+      "urlDestino": null,
+      "datosCompartidos": ["comunaJuzgado", "tipoInfraccion"]
+    },
+    {
+      "id": "revision_tecnica_agenda",
+      "habilitada": false,
+      "ubicacion": "alerta_vencimiento",
+      "documento": "revision_tecnica",
+      "disparador": { "diasAntesVencimiento": 30, "incluirVencido": true },
+      "texto": "Agendar revisión técnica",
+      "urlDestino": null,
+      "datosCompartidos": ["comuna", "tipoVehiculo"]
+    },
+    {
+      "id": "taller_mantencion",
+      "habilitada": false,
+      "ubicacion": "ficha_vehiculo",
+      "disparador": { "recordatorioMantencion": true },
+      "texto": "Talleres cercanos",
+      "urlDestino": null,
+      "datosCompartidos": ["comuna"]
+    }
+  ]
+}
