@@ -3,10 +3,22 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import '../guantera/modelos.dart';
+import '../navegacion/navegacion.dart';
 import 'app_scope.dart';
 import 'archivos.dart';
 import 'estado.dart';
+import 'navegar.dart';
 import 'oferta_boton.dart';
+
+/// Dónde se renueva cada documento, para "Cómo llegar". El SOAP se compra
+/// en línea, por eso no tiene lugar.
+(String, Destino)? _dondeRenovar(TipoDocumento tipo) => switch (tipo) {
+      TipoDocumento.revisionTecnica =>
+        ('Plantas de revisión técnica cercanas', LugaresUtiles.plantaRevisionTecnica),
+      TipoDocumento.licencia || TipoDocumento.permisoCirculacion =>
+        ('Dirección de Tránsito cercana', LugaresUtiles.direccionTransito),
+      _ => null,
+    };
 
 class DocumentoTile extends StatelessWidget {
   const DocumentoTile(this.doc, {super.key, this.mostrarVehiculo = false});
@@ -258,6 +270,12 @@ class _DocumentoVisorState extends State<DocumentoVisor> {
           title: Text(textoEstado(_doc, hoy)),
           subtitle: _doc.nota.isEmpty ? null : Text(_doc.nota),
         ),
+        if (estadoDe(_doc, hoy) case EstadoVencimiento.porVencer || EstadoVencimiento.vencido)
+          if (_dondeRenovar(_doc.tipo) case (final titulo, final destino)?)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: BotonNavegar(titulo: titulo, destino: destino),
+            ),
         OfertaBoton(
           contexto: OfertaBoton.contextoVencimiento(_doc, hoy),
           ciclo: OfertaBoton.cicloDe(_doc),

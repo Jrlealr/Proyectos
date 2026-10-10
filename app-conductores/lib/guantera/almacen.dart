@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import '../navegacion/navegacion.dart';
 import 'cifrado.dart';
 import 'control.dart';
 import 'modelos.dart';
@@ -14,6 +15,7 @@ class DatosGuantera {
     List<Control>? controles,
     this.permiteOfertas = true,
     Set<String>? ofertasDescartadas,
+    this.appNavegacion = AppNavegacion.preguntar,
   })  : vehiculos = vehiculos ?? [],
         documentos = documentos ?? [],
         controles = controles ?? [],
@@ -29,6 +31,9 @@ class DatosGuantera {
   /// Claves "ofertaId:documentoId:vencimiento" descartadas por el usuario.
   final Set<String> ofertasDescartadas;
 
+  /// App preferida para "Cómo llegar" (Ajustes).
+  AppNavegacion appNavegacion;
+
   Map<String, dynamic> toJson() => {
         'version': 1,
         'vehiculos': vehiculos.map((v) => v.toJson()).toList(),
@@ -36,6 +41,7 @@ class DatosGuantera {
         'controles': controles.map((c) => c.toJson()).toList(),
         'permiteOfertas': permiteOfertas,
         'ofertasDescartadas': ofertasDescartadas.toList(),
+        'appNavegacion': appNavegacion.name,
       };
 
   factory DatosGuantera.fromJson(Map<String, dynamic> j) => DatosGuantera(
@@ -51,6 +57,8 @@ class DatosGuantera {
         permiteOfertas: j['permiteOfertas'] as bool? ?? true,
         ofertasDescartadas:
             (j['ofertasDescartadas'] as List? ?? []).cast<String>().toSet(),
+        appNavegacion: AppNavegacion.values.asNameMap()[j['appNavegacion']] ??
+            AppNavegacion.preguntar,
       );
 }
 

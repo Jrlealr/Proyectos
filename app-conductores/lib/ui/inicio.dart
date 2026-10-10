@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../guantera/modelos.dart';
+import '../navegacion/navegacion.dart';
 import 'app_scope.dart';
 import 'controles.dart';
 import 'documentos.dart';
 import 'fiscalizacion.dart';
 import 'ley.dart';
+import 'navegar.dart';
 import 'oferta_boton.dart';
 import 'vehiculos.dart';
 
@@ -33,6 +35,33 @@ class _InicioState extends State<Inicio> {
       appBar: AppBar(
         title: Text(_titulos[_tab]),
         actions: [
+          IconButton(
+            tooltip: 'Lugares cercanos',
+            icon: const Icon(Icons.map_outlined),
+            onPressed: () => showModalBottomSheet<void>(
+              context: context,
+              builder: (_) => const SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text('Lugares cercanos')),
+                    BotonNavegar(
+                        titulo: 'Plantas de revisión técnica',
+                        destino: LugaresUtiles.plantaRevisionTecnica),
+                    BotonNavegar(
+                        titulo: 'Dirección de Tránsito',
+                        subtitulo: 'Licencias y permisos de circulación',
+                        destino: LugaresUtiles.direccionTransito),
+                    BotonNavegar(
+                        titulo: 'Juzgado de Policía Local',
+                        destino: LugaresUtiles.juzgadoPoliciaLocal),
+                  ]),
+                ),
+              ),
+            ),
+          ),
           IconButton(
             tooltip: 'Ajustes',
             icon: const Icon(Icons.settings_outlined),
@@ -172,12 +201,27 @@ class Ajustes extends StatelessWidget {
           value: guantera.permiteOfertas,
           onChanged: guantera.cambiarPermiteOfertas,
         ),
+        ListTile(
+          leading: const Icon(Icons.directions),
+          title: const Text('App de navegación'),
+          subtitle: const Text('Para "Cómo llegar" y lugares cercanos'),
+          trailing: DropdownButton<AppNavegacion>(
+            value: guantera.appNavegacion,
+            underline: const SizedBox.shrink(),
+            items: [
+              for (final a in AppNavegacion.values)
+                DropdownMenuItem(value: a, child: Text(a.nombre)),
+            ],
+            onChanged: (a) => guantera.cambiarAppNavegacion(a!),
+          ),
+        ),
         const ListTile(
           leading: Icon(Icons.lock_outline),
           title: Text('Tus datos'),
           subtitle: Text(
               'Tus documentos se guardan cifrados solo en este teléfono. '
-              'No se envían a ningún servidor.'),
+              'No se envían a ningún servidor. Al usar "Cómo llegar", solo el '
+              'destino elegido se envía a Google Maps o Waze.'),
         ),
       ]),
     );

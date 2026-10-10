@@ -5,10 +5,12 @@ import 'package:intl/intl.dart';
 
 import '../guantera/control.dart';
 import '../ley/multas.dart';
+import '../navegacion/navegacion.dart';
 import '../ofertas/motor_ofertas.dart';
 import 'app_scope.dart';
 import 'archivos.dart';
 import 'multas.dart';
+import 'navegar.dart';
 import 'oferta_boton.dart';
 import 'vehiculos.dart' show Vacio;
 
@@ -104,6 +106,18 @@ class ControlDetalle extends StatelessWidget {
       ),
       body: ListView(padding: const EdgeInsets.all(16), children: [
         SelectableText(resumenControl(c)),
+        const SizedBox(height: 8),
+        if (c.resultado.conCitacion)
+          BotonNavegar(
+            titulo: 'Cómo llegar al Juzgado',
+            subtitulo: c.juzgado.isEmpty ? 'Juzgado de Policía Local más cercano' : c.juzgado,
+            destino: LugaresUtiles.juzgado(c.juzgado),
+          ),
+        if (c.latitud != null && c.longitud != null)
+          BotonNavegar(
+            titulo: 'Ver lugar del control',
+            destino: DestinoCoordenadas(c.latitud!, c.longitud!),
+          ),
         if (c.resultado.conCitacion)
           OfertaBoton(
             contexto: const ContextoOferta(

@@ -1,6 +1,6 @@
-
 import 'package:flutter/foundation.dart';
 
+import '../navegacion/navegacion.dart';
 import 'alertas.dart';
 import 'almacen.dart';
 import 'control.dart';
@@ -20,6 +20,7 @@ class Guantera extends ChangeNotifier {
   List<Vehiculo> get vehiculos => List.unmodifiable(_datos.vehiculos);
   bool get permiteOfertas => _datos.permiteOfertas;
   Set<String> get ofertasDescartadas => Set.unmodifiable(_datos.ofertasDescartadas);
+  AppNavegacion get appNavegacion => _datos.appNavegacion;
 
   Future<void> cargar() async {
     _datos = await _almacen.cargar();
@@ -198,6 +199,11 @@ class Guantera extends ChangeNotifier {
 
   Future<void> cambiarPermiteOfertas(bool valor) async {
     _datos.permiteOfertas = valor;
+    await _guardar();
+  }
+
+  Future<void> cambiarAppNavegacion(AppNavegacion app) async {
+    _datos.appNavegacion = app;
     await _guardar();
   }
 
