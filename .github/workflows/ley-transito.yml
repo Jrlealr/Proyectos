@@ -1,4 +1,4 @@
-name: Ley de Tránsito - actualizar texto oficial
+name: Ley de Tránsito y UTM - actualizar datos oficiales
 
 # Descarga el texto refundido vigente de la Ley 18.290 (DFL 1, 2009,
 # idNorma 1007469) desde LeyChile (BCN) y, si cambió, lo deja en el repo.
@@ -32,6 +32,20 @@ jobs:
             -o app-conductores/tool/ley/fuente/ley_18290.xml
           head -c 600 app-conductores/tool/ley/fuente/ley_18290.xml; echo
           ls -l app-conductores/tool/ley/fuente
+
+      - name: Descargar valor UTM
+        # No detiene el proceso si la fuente falla: la app usa el último valor.
+        continue-on-error: true
+        run: |
+          curl -fsSL --retry 4 --retry-delay 5 https://mindicador.cl/api/utm \
+            -o app-conductores/tool/ley/fuente/utm_mindicador.json
+          curl -fsSL --retry 2 -A "Mozilla/5.0" \
+            "https://www.sii.cl/valores_y_fechas/utm/utm$(date +%Y).htm" \
+            -o app-conductores/tool/ley/fuente/utm_sii.html || true
+          mkdir -p app-conductores/assets/ley
+          python3 app-conductores/tool/ley/utm.py \
+            app-conductores/tool/ley/fuente/utm_mindicador.json \
+            app-conductores/assets/ley/utm.json
 
       - name: Generar JSON para la app
         run: |
