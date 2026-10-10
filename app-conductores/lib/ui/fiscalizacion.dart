@@ -8,6 +8,7 @@ import '../guantera/fiscalizacion.dart';
 import '../guantera/modelos.dart';
 import 'app_scope.dart';
 import 'estado.dart';
+import 'ley.dart';
 
 /// Abre el Modo Fiscalización. Si hay varios vehículos, pregunta cuál.
 Future<void> abrirFiscalizacion(BuildContext context) async {
@@ -254,12 +255,48 @@ class _SiNoAceptan extends StatelessWidget {
           leading: CircleAvatar(child: Text('${i + 1}')),
           title: Text(p),
         ),
+      const _ArticulosDocumentos(),
       const SizedBox(height: 16),
       Text(
         'Información referencial, no constituye asesoría legal.',
         style: Theme.of(context).textTheme.bodySmall,
         textAlign: TextAlign.center,
       ),
+    ]);
+  }
+}
+
+/// Artículos de la Ley 18.290 sobre los documentos que se deben portar.
+/// Nota: la ley no regula el formato digital; eso depende de otras normas.
+class _ArticulosDocumentos extends StatelessWidget {
+  const _ArticulosDocumentos();
+
+  static const _articulos = {
+    '5': 'Licencia para conducir',
+    '6': 'Llevar licencia y certificado del SOAP',
+    '51': 'Placa patente, permiso de circulación y SOAP',
+    '89': 'Revisión técnica vigente',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final ley = AppScope.of(context).ley;
+    if (ley == null) return const SizedBox.shrink();
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const Padding(
+        padding: EdgeInsets.fromLTRB(16, 16, 16, 4),
+        child: Text('Lo que exige la Ley de Tránsito',
+            style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      for (final MapEntry(key: numero, value: resumen) in _articulos.entries)
+        if (ley.articulo(numero) case final a?)
+          ListTile(
+            leading: const Icon(Icons.gavel),
+            title: Text('Artículo $numero'),
+            subtitle: Text(resumen),
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => ArticuloPantalla(articulo: a))),
+          ),
     ]);
   }
 }

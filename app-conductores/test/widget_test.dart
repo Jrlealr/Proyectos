@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:typed_data';
 
 import 'package:app_conductores/guantera/modelos.dart';
+import 'package:app_conductores/ley/ley.dart';
 import 'package:app_conductores/main.dart';
 import 'package:app_conductores/ofertas/motor_ofertas.dart';
 import 'package:app_conductores/ofertas/oferta.dart';
@@ -62,5 +64,26 @@ void main() {
     expect(find.text('Vencido el 01-10-2026'), findsOneWidget);
     expect(find.text('No guardado en la app'), findsNWidgets(3));
     expect(find.textContaining('app de Conaset'), findsOneWidget);
+  });
+
+  testWidgets('pestaña Ley: buscar y abrir un artículo', (tester) async {
+    final dir = Directory.systemTemp.createTempSync('guantera_ley');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final (g, _, _) = (await tester
+        .runAsync(() => guanteraDePrueba(dir, DateTime(2026, 10, 10))))!;
+    final ley = Ley.fromJson(jsonDecode(
+        File('assets/ley/ley_18290.json').readAsStringSync()) as Map<String, dynamic>);
+
+    await tester.pumpWidget(AppConductores(
+        guantera: g, ofertas: MotorOfertas(ConfigOfertas.desactivada), ley: ley));
+    await tester.tap(find.text('Ley'));
+    await tester.pumpAndSettle();
+    expect(find.text('Documentos obligatorios'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), 'art 51');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Artículo 51').first);
+    await tester.pumpAndSettle();
+    expect(find.textContaining('seguro obligatorio', findRichText: true), findsWidgets);
   });
 }

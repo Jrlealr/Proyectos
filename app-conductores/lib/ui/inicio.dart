@@ -4,6 +4,7 @@ import '../guantera/modelos.dart';
 import 'app_scope.dart';
 import 'documentos.dart';
 import 'fiscalizacion.dart';
+import 'ley.dart';
 import 'oferta_boton.dart';
 import 'vehiculos.dart';
 
@@ -17,7 +18,12 @@ class Inicio extends StatefulWidget {
 class _InicioState extends State<Inicio> {
   int _tab = 0;
 
-  static const _titulos = ['Mis vehículos', 'Mis documentos', 'Vencimientos'];
+  static const _titulos = [
+    'Mis vehículos',
+    'Mis documentos',
+    'Vencimientos',
+    'Ley de Tránsito',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +62,8 @@ class _InicioState extends State<Inicio> {
           child: switch (_tab) {
             0 => const VehiculosPantalla(),
             1 => const _DocumentosPersonales(),
-            _ => const _Vencimientos(),
+            2 => const _Vencimientos(),
+            _ => const LeyPantalla(),
           },
         ),
       ]),
@@ -85,6 +92,7 @@ class _InicioState extends State<Inicio> {
               icon: Icon(Icons.badge_outlined), label: 'Personales'),
           NavigationDestination(
               icon: Icon(Icons.notifications_outlined), label: 'Vencimientos'),
+          NavigationDestination(icon: Icon(Icons.gavel), label: 'Ley'),
         ],
       ),
     );

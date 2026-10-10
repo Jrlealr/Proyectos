@@ -7,6 +7,7 @@ import 'guantera/alertas.dart';
 import 'guantera/almacen.dart';
 import 'guantera/cifrado.dart';
 import 'guantera/guantera.dart';
+import 'ley/ley.dart';
 import 'ofertas/motor_ofertas.dart';
 import 'ui/app_scope.dart';
 import 'ui/inicio.dart';
@@ -21,20 +22,24 @@ Future<void> main() async {
   );
   await guantera.cargar();
   final ofertas = await MotorOfertas.cargar();
-  runApp(AppConductores(guantera: guantera, ofertas: ofertas));
+  final ley = await Ley.cargar();
+  runApp(AppConductores(guantera: guantera, ofertas: ofertas, ley: ley));
 }
 
 class AppConductores extends StatelessWidget {
-  const AppConductores({super.key, required this.guantera, required this.ofertas});
+  const AppConductores(
+      {super.key, required this.guantera, required this.ofertas, this.ley});
 
   final Guantera guantera;
   final MotorOfertas ofertas;
+  final Ley? ley;
 
   @override
   Widget build(BuildContext context) {
     return AppScope(
       guantera: guantera,
       ofertas: ofertas,
+      ley: ley,
       child: MaterialApp(
         title: 'App Conductores',
         theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),

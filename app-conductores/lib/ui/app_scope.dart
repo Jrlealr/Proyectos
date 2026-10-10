@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../guantera/guantera.dart';
+import '../ley/ley.dart';
 import '../ofertas/motor_ofertas.dart';
 
 /// Da acceso a la guantera y al motor de ofertas en todo el árbol de widgets
@@ -10,10 +11,14 @@ class AppScope extends InheritedNotifier<Guantera> {
     super.key,
     required Guantera guantera,
     required this.ofertas,
+    this.ley,
     required super.child,
   }) : super(notifier: guantera);
 
   final MotorOfertas ofertas;
+
+  /// null si el texto de la ley no está empaquetado.
+  final Ley? ley;
 
   static AppScope of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<AppScope>()!;

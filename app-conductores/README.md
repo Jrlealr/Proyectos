@@ -24,6 +24,8 @@ flutter run        # con un emulador o dispositivo Android conectado
 | Carpeta | Contenido |
 |---|---|
 | `lib/guantera/` | Guantera digital: modelos, cifrado AES-256-GCM (clave en Keystore/Keychain), almacenamiento local, alertas de vencimiento |
+| `lib/ley/` | Ley de Tránsito: modelo, búsqueda sin tildes, temas |
+| `tool/ley/` | `convertir.py` (XML oficial de LeyChile → JSON de la app) y el XML descargado |
 | `lib/ofertas/` | Puntos de oferta (desactivados en v1) |
 | `lib/ui/` | Pantallas: vehículos, documentos personales, vencimientos, ajustes |
 
@@ -36,3 +38,11 @@ flutter run        # con un emulador o dispositivo Android conectado
 - Alertas locales 30, 15, 1 y 0 días antes, a las 9:00.
 - **Modo fiscalización**: botón rojo en la pantalla de inicio. Elige el vehículo, muestra un resumen de los 5 documentos obligatorios (vigente / por vencer / vencido / no guardado) y luego cada documento en pantalla completa, brillo al máximo, pantalla siempre encendida y fondo blanco para leer el QR. Termina con una guía de qué hacer si no aceptan los documentos digitales. Sin ofertas.
 - Sin respaldo en la nube (la clave no viaja con los datos). Desinstalar la app borra los documentos.
+
+## Ley de Tránsito
+
+- Texto oficial vigente de la **Ley 18.290** (texto refundido DFL 1 de 2009, `idNorma=1007469`) desde **LeyChile (BCN)**, empaquetado en la app: funciona sin internet.
+- Pestaña **Ley**: buscador (por palabras sin tildes o por número, ej. "art 96 bis"), 8 temas (documentos, fiscalización, infracciones, velocidad, alcohol, celular, motos, licencias) y ley completa. Si el usuario tiene moto, "Motocicletas" aparece arriba.
+- Los temas se asignan **automáticamente por palabras clave**: son una ayuda para navegar, no una clasificación jurídica.
+- **Actualización**: el workflow `.github/workflows/ley-transito.yml` descarga el XML cada lunes, regenera `assets/ley/ley_18290.json` y lo sube si cambió. La próxima compilación del APK incluye el texto nuevo.
+- **Importante**: la Ley 18.290 exige *portar* licencia, permiso de circulación, SOAP y revisión técnica (arts. 5, 6, 51, 89), pero **no regula el formato digital**. Su aceptación depende de otras normas o instrucciones, que un abogado debe identificar antes de citarlas en la app.
