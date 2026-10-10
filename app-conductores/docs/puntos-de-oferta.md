@@ -12,7 +12,7 @@ Un *punto de oferta* es un botón de acción opcional que aparece **dentro de un
 5. **Etiqueta visible** "Patrocinado" en todo botón de oferta.
 6. **Frecuencia**: máximo 1 oferta por alerta; si el usuario la descarta, no reaparece en ese ciclo de vencimiento.
 7. **Ajustes → "Ofertas y beneficios"**: interruptor para que el usuario las apague todas.
-8. **Actualización de flags**: los flags vienen empaquetados en la app (`config/ofertas.json`). Opcionalmente se puede descargar una versión nueva desde un JSON estático (GET sin identificadores del usuario). Así se activan sin publicar una versión nueva.
+8. **Actualización de flags**: los flags vienen empaquetados en la app (`assets/config/ofertas.json`). Opcionalmente se puede descargar una versión nueva desde un JSON estático (GET sin identificadores del usuario). Así se activan sin publicar una versión nueva.
 
 ## Catálogo v1
 
