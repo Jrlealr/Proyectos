@@ -86,4 +86,40 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.textContaining('seguro obligatorio', findRichText: true), findsWidgets);
   });
+
+  testWidgets('registrar un control con citación', (tester) async {
+    // Pantalla alta: el formulario completo cabe sin desplazarse.
+    tester.view.physicalSize = const Size(800, 3000);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final dir = Directory.systemTemp.createTempSync('guantera_control');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final (g, _, _) = (await tester
+        .runAsync(() => guanteraDePrueba(dir, DateTime(2026, 10, 10))))!;
+
+    await tester.pumpWidget(AppConductores(
+        guantera: g, ofertas: MotorOfertas(ConfigOfertas.desactivada)));
+    await tester.tap(find.text('Controles'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.widgetWithText(TextField, 'Lugar'), 'Alameda con Ahumada');
+    await tester.enterText(find.widgetWithText(TextField, 'Grado'), 'Sargento');
+    await tester.tap(find.text('Sin infracción'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Citación al Juzgado (parte)').last);
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'N° de citación / boleta'), '987');
+
+    await tester.runAsync(() async {
+      await tester.tap(find.text('Guardar'));
+      await Future<void>.delayed(const Duration(milliseconds: 300));
+    });
+    await tester.pumpAndSettle();
+    expect(find.textContaining('N° de citación: 987'), findsOneWidget);
+    expect(find.textContaining('Lugar: Alameda con Ahumada'), findsOneWidget);
+    expect(g.controles.single.funcionarioGrado, 'Sargento');
+  });
 }
+

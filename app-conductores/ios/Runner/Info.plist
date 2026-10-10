@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Para guardar el lugar de un control en tu registro. La ubicación queda solo en tu teléfono.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Para fotografiar tus documentos y guardarlos cifrados en el teléfono.</string>
 	<key>NSPhotoLibraryUsageDescription</key>

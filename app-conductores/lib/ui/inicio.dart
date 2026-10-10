@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../guantera/modelos.dart';
 import 'app_scope.dart';
+import 'controles.dart';
 import 'documentos.dart';
 import 'fiscalizacion.dart';
 import 'ley.dart';
@@ -22,6 +23,7 @@ class _InicioState extends State<Inicio> {
     'Mis vehículos',
     'Mis documentos',
     'Vencimientos',
+    'Controles',
     'Ley de Tránsito',
   ];
 
@@ -63,6 +65,7 @@ class _InicioState extends State<Inicio> {
             0 => const VehiculosPantalla(),
             1 => const _DocumentosPersonales(),
             2 => const _Vencimientos(),
+            3 => const ControlesPantalla(),
             _ => const LeyPantalla(),
           },
         ),
@@ -80,6 +83,12 @@ class _InicioState extends State<Inicio> {
             icon: const Icon(Icons.add),
             label: const Text('Documento'),
           ),
+        3 => FloatingActionButton.extended(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const ControlForm())),
+            icon: const Icon(Icons.add),
+            label: const Text('Control'),
+          ),
         _ => null,
       },
       bottomNavigationBar: NavigationBar(
@@ -92,6 +101,8 @@ class _InicioState extends State<Inicio> {
               icon: Icon(Icons.badge_outlined), label: 'Personales'),
           NavigationDestination(
               icon: Icon(Icons.notifications_outlined), label: 'Vencimientos'),
+          NavigationDestination(
+              icon: Icon(Icons.local_police_outlined), label: 'Controles'),
           NavigationDestination(icon: Icon(Icons.gavel), label: 'Ley'),
         ],
       ),

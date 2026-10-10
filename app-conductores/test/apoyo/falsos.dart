@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app_conductores/guantera/alertas.dart';
 import 'package:app_conductores/guantera/almacen.dart';
 import 'package:app_conductores/guantera/cifrado.dart';
+import 'package:app_conductores/guantera/control.dart';
 import 'package:app_conductores/guantera/guantera.dart';
 import 'package:app_conductores/guantera/modelos.dart';
 
@@ -26,6 +27,16 @@ class AlertasFalsas implements Alertas {
     canceladas.add(doc.id);
     programadas.remove(doc.id);
   }
+
+  final controles = <String>{};
+
+  @override
+  Future<void> programarControl(Control c) async {
+    if (c.fechaComparecencia != null) controles.add(c.id);
+  }
+
+  @override
+  Future<void> cancelarControl(Control c) async => controles.remove(c.id);
 }
 
 Future<(Guantera, AlertasFalsas, AlmacenGuantera)> guanteraDePrueba(

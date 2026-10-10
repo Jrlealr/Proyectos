@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 import 'alertas.dart';
 import 'almacen.dart';
+import 'control.dart';
 import 'modelos.dart';
 
 /// Estado de la guantera digital para la UI.
@@ -148,6 +149,52 @@ class Guantera extends ChangeNotifier {
   }
 
   Future<Uint8List> leerArchivo(Documento doc) => _almacen.leerArchivo(doc.archivoId);
+
+  /// Controles registrados, del más reciente al más antiguo.
+  List<Control> get controles => [..._datos.controles]
+    ..sort((a, b) => b.fechaHora.compareTo(a.fechaHora));
+
+  Control? control(String id) =>
+      _datos.controles.where((c) => c.id == id).firstOrNull;
+
+  String nuevoId() => _almacen.nuevoId();
+
+  /// Crea o reemplaza un control. [nuevosAdjuntos] se cifran y se agregan.
+  Future<Control> guardarControl(
+    Control c, {
+    List<(Uint8List bytes, bool esPdf, String nombre)> nuevosAdjuntos = const [],
+  }) async {
+    final adjuntos = [...c.adjuntos];
+    for (final (bytes, esPdf, nombre) in nuevosAdjuntos) {
+      adjuntos.add(Adjunto(
+          archivoId: await _almacen.guardarArchivo(bytes), esPdf: esPdf, nombre: nombre));
+    }
+    final previo = control(c.id);
+    // Adjuntos quitados en la edición: se borran del disco.
+    for (final a in previo?.adjuntos ?? const <Adjunto>[]) {
+      if (!adjuntos.any((x) => x.archivoId == a.archivoId)) {
+        await _almacen.borrarArchivo(a.archivoId);
+      }
+    }
+    final nuevo = c.copyWith(adjuntos: adjuntos);
+    _datos.controles
+      ..removeWhere((x) => x.id == c.id)
+      ..add(nuevo);
+    await _guardar();
+    await _alertas.programarControl(nuevo);
+    return nuevo;
+  }
+
+  Future<void> borrarControl(Control c) async {
+    await _alertas.cancelarControl(c);
+    for (final a in c.adjuntos) {
+      await _almacen.borrarArchivo(a.archivoId);
+    }
+    _datos.controles.removeWhere((x) => x.id == c.id);
+    await _guardar();
+  }
+
+  Future<Uint8List> leerAdjunto(Adjunto a) => _almacen.leerArchivo(a.archivoId);
 
   Future<void> cambiarPermiteOfertas(bool valor) async {
     _datos.permiteOfertas = valor;

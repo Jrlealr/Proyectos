@@ -37,6 +37,7 @@ flutter run        # con un emulador o dispositivo Android conectado
 - Fecha de vencimiento con estado (vigente / por vencer ≤30 días / vencido). Permiso y SOAP sugieren el 31 de marzo.
 - Alertas locales 30, 15, 1 y 0 días antes, a las 9:00.
 - **Modo fiscalización**: botón rojo en la pantalla de inicio. Elige el vehículo, muestra un resumen de los 5 documentos obligatorios (vigente / por vencer / vencido / no guardado) y luego cada documento en pantalla completa, brillo al máximo, pantalla siempre encendida y fondo blanco para leer el QR. Termina con una guía de qué hacer si no aceptan los documentos digitales. Sin ofertas.
+- **Registro de controles** (pestaña Controles, o "Registrar" desde el Modo fiscalización): fecha y hora, vehículo, lugar con GPS opcional, institución, grado, nombre e identificación del funcionario, motivo, resultado; si hay citación: N° de boleta, infracción, Juzgado y fecha de comparecencia (aviso el día anterior y 2 horas antes). Fotos/PDF adjuntos cifrados. Botón para copiar un resumen en texto para los descargos. Sin grabación de audio (pendiente de revisión legal).
 - Sin respaldo en la nube (la clave no viaja con los datos). Desinstalar la app borra los documentos.
 
 ## Ley de Tránsito

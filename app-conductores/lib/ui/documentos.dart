@@ -1,12 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pdfrx/pdfrx.dart';
 
 import '../guantera/modelos.dart';
 import 'app_scope.dart';
+import 'archivos.dart';
 import 'estado.dart';
 import 'oferta_boton.dart';
 
@@ -71,31 +69,11 @@ class _DocumentoFormState extends State<DocumentoForm> {
   void _sugerirFecha() =>
       _vencimiento = vencimientoSugerido(_tipo, DateTime.now());
 
-  Future<void> _elegirArchivo() async {
-    final f = await FilePicker.pickFile(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png', 'heic', 'webp'],
-    );
-    if (f == null) return;
-    final bytes = await f.xFile.readAsBytes();
-    setState(() {
-      _bytes = bytes;
-      _esPdf = f.extension?.toLowerCase() == 'pdf';
-      _nombre = f.name;
-    });
-  }
-
-  Future<void> _tomarFoto(ImageSource fuente) async {
-    final foto = await ImagePicker()
-        .pickImage(source: fuente, imageQuality: 85, maxWidth: 2400);
-    if (foto == null) return;
-    final bytes = await foto.readAsBytes();
-    setState(() {
-      _bytes = bytes;
-      _esPdf = false;
-      _nombre = foto.name;
-    });
-  }
+  void _usarArchivo(ArchivoElegido a) => setState(() {
+        _bytes = a.bytes;
+        _esPdf = a.esPdf;
+        _nombre = a.nombre;
+      });
 
   Future<void> _elegirFecha() async {
     final hoy = DateTime.now();
@@ -159,23 +137,7 @@ class _DocumentoFormState extends State<DocumentoForm> {
             ),
           ],
           const SizedBox(height: 16),
-          Wrap(spacing: 8, runSpacing: 8, children: [
-            OutlinedButton.icon(
-              onPressed: _elegirArchivo,
-              icon: const Icon(Icons.upload_file),
-              label: const Text('PDF o imagen'),
-            ),
-            OutlinedButton.icon(
-              onPressed: () => _tomarFoto(ImageSource.camera),
-              icon: const Icon(Icons.photo_camera),
-              label: const Text('Cámara'),
-            ),
-            OutlinedButton.icon(
-              onPressed: () => _tomarFoto(ImageSource.gallery),
-              icon: const Icon(Icons.photo_library),
-              label: const Text('Galería'),
-            ),
-          ]),
+          BotonesArchivo(alElegir: _usarArchivo),
           if (_bytes != null)
             ListTile(
               contentPadding: EdgeInsets.zero,
@@ -301,23 +263,7 @@ class _DocumentoVisorState extends State<DocumentoVisor> {
           ciclo: OfertaBoton.cicloDe(_doc),
         ),
         Expanded(
-          child: FutureBuilder<Uint8List>(
-            future: _bytes,
-            builder: (context, snap) {
-              if (snap.hasError) {
-                return const Center(child: Text('No se pudo abrir el documento'));
-              }
-              if (!snap.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return _doc.esPdf
-                  ? PdfViewer.data(snap.data!, sourceName: _doc.id)
-                  : InteractiveViewer(
-                      maxScale: 6,
-                      child: Center(child: Image.memory(snap.data!)),
-                    );
-            },
-          ),
+          child: VistaArchivo(bytes: _bytes, esPdf: _doc.esPdf, nombre: _doc.id),
         ),
       ]),
     );

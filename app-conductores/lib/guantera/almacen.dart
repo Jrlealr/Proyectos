@@ -4,20 +4,24 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'cifrado.dart';
+import 'control.dart';
 import 'modelos.dart';
 
 class DatosGuantera {
   DatosGuantera({
     List<Vehiculo>? vehiculos,
     List<Documento>? documentos,
+    List<Control>? controles,
     this.permiteOfertas = true,
     Set<String>? ofertasDescartadas,
   })  : vehiculos = vehiculos ?? [],
         documentos = documentos ?? [],
+        controles = controles ?? [],
         ofertasDescartadas = ofertasDescartadas ?? {};
 
   final List<Vehiculo> vehiculos;
   final List<Documento> documentos;
+  final List<Control> controles;
 
   /// Interruptor de Ajustes → "Ofertas y beneficios".
   bool permiteOfertas;
@@ -29,6 +33,7 @@ class DatosGuantera {
         'version': 1,
         'vehiculos': vehiculos.map((v) => v.toJson()).toList(),
         'documentos': documentos.map((d) => d.toJson()).toList(),
+        'controles': controles.map((c) => c.toJson()).toList(),
         'permiteOfertas': permiteOfertas,
         'ofertasDescartadas': ofertasDescartadas.toList(),
       };
@@ -39,6 +44,9 @@ class DatosGuantera {
             .toList(),
         documentos: (j['documentos'] as List? ?? [])
             .map((d) => Documento.fromJson(d as Map<String, dynamic>))
+            .toList(),
+        controles: (j['controles'] as List? ?? [])
+            .map((c) => Control.fromJson(c as Map<String, dynamic>))
             .toList(),
         permiteOfertas: j['permiteOfertas'] as bool? ?? true,
         ofertasDescartadas:

@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pdfrx/pdfrx.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../guantera/fiscalizacion.dart';
 import '../guantera/modelos.dart';
 import 'app_scope.dart';
+import 'archivos.dart';
+import 'controles.dart';
 import 'estado.dart';
 import 'ley.dart';
 
@@ -110,6 +111,16 @@ class _ModoFiscalizacionState extends State<ModoFiscalizacion> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (_) => ControlForm(vehiculoId: widget.vehiculoId))),
+            icon: const Icon(Icons.edit_note),
+            label: const Text('Registrar'),
+          ),
+        ],
         title: Text(vehiculo?.patente ?? 'Fiscalización',
             style: const TextStyle(fontWeight: FontWeight.bold, letterSpacing: 2)),
         bottom: PreferredSize(
@@ -213,23 +224,8 @@ class _PaginaDocumentoState extends State<_PaginaDocumento>
         child: ColoredBox(
           // Fondo blanco: mejora la lectura del código QR.
           color: Colors.white,
-          child: FutureBuilder<Uint8List>(
-            future: _bytes,
-            builder: (context, snap) {
-              if (snap.hasError) {
-                return const Center(child: Text('No se pudo abrir el documento'));
-              }
-              if (!snap.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return widget.doc.esPdf
-                  ? PdfViewer.data(snap.data!, sourceName: 'fisc-${widget.doc.id}')
-                  : InteractiveViewer(
-                      maxScale: 6,
-                      child: Center(child: Image.memory(snap.data!)),
-                    );
-            },
-          ),
+          child: VistaArchivo(
+              bytes: _bytes, esPdf: widget.doc.esPdf, nombre: 'fisc-${widget.doc.id}'),
         ),
       ),
     ]);
