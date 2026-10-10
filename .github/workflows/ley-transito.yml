@@ -1,0 +1,54 @@
+name: Ley de Tránsito - actualizar texto oficial
+
+# Descarga el texto refundido vigente de la Ley 18.290 (DFL 1, 2009,
+# idNorma 1007469) desde LeyChile (BCN) y, si cambió, lo deja en el repo.
+on:
+  push:
+    paths:
+      - ".github/workflows/ley-transito.yml"
+      - "app-conductores/tool/ley/**"
+  schedule:
+    - cron: "17 10 * * 1"   # lunes 07:17 hora de Chile (aprox.)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ley-${{ github.ref }}
+
+jobs:
+  actualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Descargar XML desde LeyChile
+        run: |
+          mkdir -p app-conductores/tool/ley/fuente
+          curl -fsSL --retry 4 --retry-delay 5 \
+            -A "Mozilla/5.0 (AppConductores; +https://github.com/${{ github.repository }})" \
+            "https://www.leychile.cl/Consulta/obtxml?opt=7&idNorma=1007469" \
+            -o app-conductores/tool/ley/fuente/ley_18290.xml
+          head -c 600 app-conductores/tool/ley/fuente/ley_18290.xml; echo
+          ls -l app-conductores/tool/ley/fuente
+
+      - name: Generar JSON para la app
+        run: |
+          if [ -f app-conductores/tool/ley/convertir.py ]; then
+            python3 app-conductores/tool/ley/convertir.py \
+              app-conductores/tool/ley/fuente/ley_18290.xml \
+              app-conductores/assets/ley/ley_18290.json
+          fi
+
+      - name: Guardar cambios
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app-conductores/tool/ley/fuente app-conductores/assets/ley 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "Sin cambios en la ley."
+          else
+            git commit -m "Actualizar texto de la Ley de Tránsito desde LeyChile"
+            git push
+          fi
