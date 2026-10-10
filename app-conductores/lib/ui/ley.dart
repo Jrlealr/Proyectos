@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../guantera/modelos.dart';
 import '../ley/ley.dart';
 import 'app_scope.dart';
+import 'multas.dart';
 
 const avisoLegal =
     'Texto oficial obtenido de LeyChile (Biblioteca del Congreso Nacional). '
@@ -83,6 +84,17 @@ class _LeyPantallaState extends State<LeyPantalla> {
                 vacio: 'Sin resultados para "$_texto"',
               )
             : ListView(children: [
+                if (ley.multas != null)
+                  ListTile(
+                    leading: const Icon(Icons.payments_outlined),
+                    title: const Text('Tabla de multas'),
+                    subtitle: const Text('Infracciones por gravedad y montos'),
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const TablaMultasPantalla())),
+                  ),
                 for (final t in _temas(context))
                   ListTile(
                     leading: Icon(_icono(t)),

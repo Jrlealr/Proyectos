@@ -4,9 +4,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 
 import '../guantera/control.dart';
+import '../ley/multas.dart';
 import '../ofertas/motor_ofertas.dart';
 import 'app_scope.dart';
 import 'archivos.dart';
+import 'multas.dart';
 import 'oferta_boton.dart';
 import 'vehiculos.dart' show Vacio;
 
@@ -349,6 +351,24 @@ class _ControlFormState extends State<ControlForm> {
         if (_resultado.conCitacion) ...[
           _campo(_citacion, 'N° de citación / boleta'),
           _campo(_infracciones, 'Infracción imputada', lineas: 3),
+          if (AppScope.of(context).ley?.multas != null)
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                icon: const Icon(Icons.list_alt),
+                label: const Text('Elegir de la tabla de multas'),
+                onPressed: () async {
+                  final i = await Navigator.push<Infraccion>(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => const TablaMultasPantalla(seleccionar: true)));
+                  if (i != null) {
+                    _infracciones.text =
+                        '${i.referencia} (${i.gravedad.nombre.toLowerCase()}): ${i.texto}';
+                  }
+                },
+              ),
+            ),
           _campo(_juzgado, 'Juzgado de Policía Local', ayuda: 'Indicado en la citación'),
           ListTile(
             contentPadding: EdgeInsets.zero,

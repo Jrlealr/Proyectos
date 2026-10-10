@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'multas.dart';
+
 /// Temas para navegar la ley. Los artículos se etiquetan automáticamente
 /// por palabras clave en `tool/ley/convertir.py`.
 enum TemaLey {
@@ -55,6 +57,7 @@ class Ley {
     required this.versionFecha,
     required this.obtenido,
     required this.articulos,
+    this.multas,
   }) : _indice = [for (final a in articulos) normalizarTexto('${a.numero} ${a.texto}')];
 
   final String titulo;
@@ -67,6 +70,9 @@ class Ley {
   /// Cuándo se descargó desde LeyChile (ISO 8601).
   final String obtenido;
   final List<Articulo> articulos;
+
+  /// Tabla de infracciones y escala de multas (arts. 199–204).
+  final TablaMultas? multas;
   final List<String> _indice;
 
   factory Ley.fromJson(Map<String, dynamic> j) => Ley(
@@ -78,6 +84,9 @@ class Ley {
         articulos: (j['articulos'] as List)
             .map((a) => Articulo.fromJson(a as Map<String, dynamic>))
             .toList(),
+        multas: j['multas'] == null
+            ? null
+            : TablaMultas.fromJson(j['multas'] as Map<String, dynamic>),
       );
 
   static const ruta = 'assets/ley/ley_18290.json';

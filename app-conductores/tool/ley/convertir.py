@@ -101,6 +101,59 @@ def titulo_de(ef):
     return t
 
 
+GRAVEDADES = {"199": "gravisima", "200": "grave", "201": "menos_grave"}
+ITEM = re.compile(r"^(\d+)\s*[.)]?-?\s*(.*)$", re.S)
+
+
+def extraer_infracciones(articulos):
+    """Enumeraciones de los arts. 199 (gravísimas), 200 (graves) y 201
+    (menos graves). Las leves (art. 202) son todas las demás."""
+    por_numero = {a["numero"]: a for a in articulos}
+    salida, notas = [], {}
+    for art, gravedad in GRAVEDADES.items():
+        parrafos = por_numero[art]["texto"].split("\n\n")
+        # El primer ítem puede venir pegado al encabezado ("…las siguientes: 1.- …").
+        cabeza, _, resto = parrafos[0].partition("siguientes:")
+        parrafos = ([resto.strip()] if resto.strip() else []) + parrafos[1:]
+        items = []
+        for p in parrafos:
+            m = ITEM.match(p)
+            if m and m.group(2) and (not items or int(m.group(1)) == items[-1]["numero"] + 1):
+                items.append({"numero": int(m.group(1)), "texto": m.group(2).strip()})
+            elif items and re.match(r"^([a-zñ]\)|[a-zñ]\.-|[a-zñ])", p):
+                items[-1]["texto"] += "\n\n" + p  # continuación (letras a), b)…)
+            elif items:
+                notas.setdefault(art, []).append(p)  # inciso final del artículo
+        if len(items) < 5:
+            sys.exit(f"Art. {art}: muy pocos ítems ({len(items)}); ¿cambió el formato?")
+        salida += [{"articulo": art, "gravedad": gravedad, **i} for i in items]
+    return salida, notas
+
+
+ESCALA = re.compile(
+    r"(gravísimas|graves|menos graves|leves),\s*([\d,]+)\s*a\s*([\d,]+)\s*unidad",
+    re.I,
+)
+CLAVE_GRAVEDAD = {
+    "gravísimas": "gravisima", "graves": "grave",
+    "menos graves": "menos_grave", "leves": "leve",
+}
+
+
+def extraer_escala(articulos):
+    """Rangos de multa en UTM según el art. 204."""
+    texto = next(a["texto"] for a in articulos if a["numero"] == "204")
+    escala = {}
+    for g, minimo, maximo in ESCALA.findall(texto):
+        escala[CLAVE_GRAVEDAD[g.lower()]] = {
+            "minUtm": float(minimo.replace(",", ".")),
+            "maxUtm": float(maximo.replace(",", ".")),
+        }
+    if len(escala) != 4:
+        sys.exit(f"Art. 204: escala incompleta {escala}; ¿cambió el formato?")
+    return escala
+
+
 def convertir(ruta_xml):
     raiz = ET.parse(ruta_xml).getroot()
     articulos = []
@@ -132,6 +185,12 @@ def convertir(ruta_xml):
                 recorrer(ef, ubicacion)
 
     recorrer(raiz, [])
+    infracciones, notas = extraer_infracciones(articulos)
+    multas = {
+        "escala": extraer_escala(articulos),
+        "infracciones": infracciones,
+        "notas": notas,
+    }
     nombre = raiz.findtext("n:Metadatos/n:NombresUsoComun/n:NombreUsoComun", "", NS)
     return {
         "titulo": nombre.strip().capitalize().replace("transito", "tránsito") or "Ley de Tránsito",
@@ -140,6 +199,7 @@ def convertir(ruta_xml):
         "versionFecha": raiz.get("fechaVersion", ""),
         "obtenido": datetime.now(timezone.utc).date().isoformat(),
         "articulos": articulos,
+        "multas": multas,
     }
 
 

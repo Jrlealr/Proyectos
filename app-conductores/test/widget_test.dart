@@ -8,6 +8,7 @@ import 'dart:typed_data';
 
 import 'package:app_conductores/guantera/modelos.dart';
 import 'package:app_conductores/ley/ley.dart';
+import 'package:app_conductores/ley/multas.dart';
 import 'package:app_conductores/main.dart';
 import 'package:app_conductores/ofertas/motor_ofertas.dart';
 import 'package:app_conductores/ofertas/oferta.dart';
@@ -121,5 +122,32 @@ void main() {
     expect(find.textContaining('Lugar: Alameda con Ahumada'), findsOneWidget);
     expect(g.controles.single.funcionarioGrado, 'Sargento');
   });
-}
 
+  testWidgets('tabla de multas con montos en pesos', (tester) async {
+    final dir = Directory.systemTemp.createTempSync('guantera_multas');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final (g, _, _) = (await tester
+        .runAsync(() => guanteraDePrueba(dir, DateTime(2026, 10, 10))))!;
+    final ley = Ley.fromJson(jsonDecode(
+        File('assets/ley/ley_18290.json').readAsStringSync()) as Map<String, dynamic>);
+
+    await tester.pumpWidget(AppConductores(
+      guantera: g,
+      ofertas: MotorOfertas(ConfigOfertas.desactivada),
+      ley: ley,
+      utm: const Utm(valor: 68000, mes: '2026-10', fuente: 'prueba'),
+    ));
+    await tester.tap(find.text('Ley'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Tabla de multas'));
+    await tester.pumpAndSettle();
+    expect(find.text('Escala de multas (art. 204)'), findsOneWidget);
+    expect(find.textContaining(r'$102.000 a $204.000'), findsOneWidget);
+
+    await tester.enterText(find.byType(TextField), '199 5');
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Art. 199 N° 5'));
+    await tester.pumpAndSettle();
+    expect(find.text('Multa: 1,5 UTM a 3 UTM'), findsOneWidget);
+  });
+}

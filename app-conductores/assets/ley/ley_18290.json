@@ -2326,5 +2326,506 @@
     "licencias"
    ]
   }
- ]
+ ],
+ "multas": {
+  "escala": {
+   "gravisima": {
+    "minUtm": 1.5,
+    "maxUtm": 3.0
+   },
+   "grave": {
+    "minUtm": 1.0,
+    "maxUtm": 1.5
+   },
+   "menos_grave": {
+    "minUtm": 0.5,
+    "maxUtm": 1.0
+   },
+   "leve": {
+    "minUtm": 0.2,
+    "maxUtm": 0.5
+   }
+  },
+  "infracciones": [
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 1,
+    "texto": "No detenerse ante la luz roja de las señales luminosas del tránsito, o ante la señal \"PARE\"."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 2,
+    "texto": "Conducir un vehículo motorizado o a tracción animal sin haber obtenido licencia de conductor, sin perjuicio de lo dispuesto en el artículo 194."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 3,
+    "texto": "Conducir un vehículo infringiendo lo dispuesto en los incisos tercero y cuarto del artículo 75."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 4,
+    "texto": "Acceder a los servicios de transporte público remunerado de pasajeros utilizando un pase escolar, pase de educación superior o cualquier instrumento o mecanismo que permita el uso del transporte público remunerado de pasajeros con beneficios, sin ser su titular, o alterándolo con el fin de aparentar la titularidad sobre éstos, para el exclusivo uso de quien efectúe tal alteración."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 5,
+    "texto": "Conducir un vehículo manipulando un dispositivo de telefonía móvil o cualquier otro artefacto electrónico o digital, que no venga incorporado de fábrica en él, excepto si la acción se realiza a través de un sistema de manos libres, conforme a las especificaciones que determine el reglamento."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 6,
+    "texto": "Conducir un vehículo sin la placa patente única cuando ésta sea exigible conforme con lo dispuesto en el artículo 51."
+   },
+   {
+    "articulo": "199",
+    "gravedad": "gravisima",
+    "numero": 7,
+    "texto": "Conducir un vehículo con la placa patente oculta o que utilice objetos, accesorios, luces o aditamentos que obstaculicen su plena percepción, o si la placa patente se encuentra en mal estado y dificulte la identificación del vehículo, siempre que la placa patente sea exigible conforme a lo dispuesto en el artículo 51."
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 1,
+    "texto": "Conducir un vehículo en condiciones físicas o psíquicas deficientes;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 2,
+    "texto": "Conducir un vehículo con una licencia de conductor distinta a la que corresponda, salvo lo dispuesto en el inciso primero del artículo 194;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 3,
+    "texto": "Sobrepasar o adelantar en la situación prevista en los números 1 y 2 del artículo 122, en un paso para peatones o en un cruce no regulado, o sobrepasar por la berma;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 4,
+    "texto": "Entregar el dueño o su tenedor un vehículo para que lo conduzca persona que no cumpla con los requisitos para conducir;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 5,
+    "texto": "DEROGADO."
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 6,
+    "texto": "Desobedecer las señales u órdenes de tránsito de un integrante de Carabineros de Chile o las de un inspector fiscal en los procedimientos de fiscalización del transporte público y privado remunerado de pasajeros y transporte de carga;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 7,
+    "texto": "No respetar los signos y demás señales que rigen el tránsito público, que no sean las indicadas en el número 1 del artículo anterior;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 8,
+    "texto": "No cumplir con lo dispuesto en el artículo 131 o en el artículo 117;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 9,
+    "texto": "Conducir un vehículo contra el sentido del tránsito;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 10,
+    "texto": "Conducir por la izquierda del eje de la calzada en una vía que tenga tránsito en ambos sentidos, ocupando el todo o parte del ancho de dicha calzada, salvo la excepció n del artículo 122;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 11,
+    "texto": "No respetar el derecho preferente de paso de un peatón o de otro conductor;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 12,
+    "texto": "Detener o estacionar un vehículo en contravención a lo establecido en los números 6, 7 u 8 del artículo 154;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 13,
+    "texto": "Infringir las normas sobre virajes contempladas en los artículos 134 y 135;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 14,
+    "texto": "Conducir un vehículo con sus sistemas de direcció n o de frenos en condiciones deficientes;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 15,
+    "texto": "Conducir un vehículo sin luces en las horas y circunstancias en que las exige esta ley o sus reglamentos;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 16,
+    "texto": "Conducir un vehículo con uno o más neumáticos en mal estado;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 17,
+    "texto": "No bajar la luz en carretera al enfrentar o acercarse por detrás a otro vehículo;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 18,
+    "texto": "Conducir un vehículo sin revisión técnica d e reglamento, de homologación o de emisión de contaminantes vigentes o infringiendo las normas en materia de emisiones;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 19,
+    "texto": "Mantener animales sueltos en la vía pública o cierros en mal estado que permitan su salida a ella;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 20,
+    "texto": "No detener el vehículo antes de cruzar una línea férrea;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 21,
+    "texto": "Efectuar servicio público de pasajeros con vehículo rechazado en las revisiones técnicas de reglamento, o respecto de las cuales no se haya cumplido el trámite en su oportunidad;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 22,
+    "texto": "Conducir un taxi sin taxímetro debiendo llevarlo, tener éste sin el sello de la autoridad o acondicionado de modo que no marque la tarifa reglamentaria;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 23,
+    "texto": "Proveer de combustible a los vehículos de locomoción colectiva con pasajeros en su interior;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 24,
+    "texto": "Conducir un vehículo sin tacógrafo u otro dispositivo que registre en el tiempo la velocidad y distancia recorrida, o con éste en mal estado o e n condiciones deficientes, cuando su uso sea obligatorio;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 25,
+    "texto": "Conducir un vehículo sin permiso de circulación o sin certificado de un seguro obligatorio de accidentes causados por vehículos motorizados, vigentes;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 26,
+    "texto": "Mantener en circulación un vehículo destinado al servicio público de pasajeros o al transporte de carga con infracción a los artículos 69, 70 y 78 o sin las revisiones técnicas de reglamentos aprobadas o con el sistema de dirección en mal estado, de las que será responsable el propietario ;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 27,
+    "texto": "Conducir un vehículo con infracción de lo señalado en los artículos 62 o 65;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 28,
+    "texto": "Estacionarse en, usar u ocupar estacionamientos exclusivos para personas con discapacidad, sin derecho a ello;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 29,
+    "texto": "Detener o estacionar un vehículo en doble fila, respecto a otro vehículo detenido o estacionado junto a la cuneta;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 30,
+    "texto": "Cruzar una vía férrea en lugar no autorizad o;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 31,
+    "texto": "Conducir un vehículo infringiendo lo dispuesto en el número 10 y en el inciso segundo del artículo 75;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 32,
+    "texto": "Suprimido;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 33,
+    "texto": "Mantener abiertas las puertas de un vehículo de locomoción colectiva mientras se encuentra en movimiento; llevar pasajeros en las pisaderas o no detenerse junto a la acera al tomar o dejar pasajeros;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 34,
+    "texto": "Circular por la mitad izquierda de la calzada, salvo en las excepciones mencionadas en los artículos 116 y 125 ;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 35,
+    "texto": "Transitar en un área urbana con restricciones por razones de contaminación ambiental, sin estar autorizado;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 36,
+    "texto": "Usar cualquier tipo de elemento destinado a evadir la fiscalización ;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 37,
+    "texto": "Arrojar desde un vehículo cigarrillos u otros elementos encendidos que puedan provocar un siniestro o un accidente;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 38,
+    "texto": "Usar los particulares, dispositivos especiales propios de vehículos de emergencia, salvo los autorizad os por el reglamento;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 39,
+    "texto": "Detenerse, tratándose de medios de locomoción pública, en la intersección de calles, a dejar o tomar pasajeros en segunda fila o en paraderos no autorizados ;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 40,
+    "texto": "Toda infracción declarada por el juez como causa principal de un accidente de tránsito que origine daño o lesiones leves;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 41,
+    "texto": "Infringir lo dispuesto en el inciso final del artículo 75;"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 42,
+    "texto": "Usar los servicios de transporte público remunerado de pasajeros sin pagar la tarifa correspondiente, y"
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 43,
+    "texto": "Infringir lo dispuesto en el artículo 86."
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 44,
+    "texto": "Infringir lo dispuesto en los artículos 67 bis y 67 ter, en lo referente al transporte, carga y descarga de minerales y de concentrado de minerales."
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 45,
+    "texto": "Conducir un vehículo que no cuente con la placa patente grabada de forma permanente en los vidrios y espejos laterales, cuando esto sea exigible conforme a esta ley y sus reglamentos."
+   },
+   {
+    "articulo": "200",
+    "gravedad": "grave",
+    "numero": 46,
+    "texto": "Tratándose de comercializadores de vehículos motorizados, vender un vehículo sin la placa patente grabada de forma permanente en los vidrios y espejos laterales, cuando el grabado sea exigible conforme a esta ley y sus reglamentos."
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 1,
+    "texto": "Estacionar o detener un vehículo en lugares prohibidos, sin perjuicio de lo establecido en los números 7, 28, 29 y 39 del artículo anterior;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 2,
+    "texto": "Infringir las normas del artículo 115;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 3,
+    "texto": "Conducir un vehículo usando indebidamente las luces, con luces o focos distintos o adicionales a los permitidos en esta ley o sus reglamentos, sin perjuicio de lo establecido en el número 15 del artículo anterior;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 4,
+    "texto": "Infringir, los conductores, las disposiciones del artículo 142 ó 143 sobre vehículos de emergencia;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 5,
+    "texto": "No hacer las señales debidas antes de virar;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 6,
+    "texto": "No respetar las prohibiciones establecidas en el artículo 137;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 7,
+    "texto": "Conducir un vehículo motorizado sin silenciador o con éste o el tubo de escape en malas condiciones, o con el tubo de salida antirreglamentario;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 8,
+    "texto": "No llevar los elementos señalados en los números 1, 2 y 3 del artículo 75;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 9,
+    "texto": "Detener o estacionar un vehículo en doble fila;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 10,
+    "texto": "Destinar y mantener en circulación un vehículo de servicio público de pasajeros o de carga que no cumpla con los requisitos establecidos en la ley, su reglament o o aquellas normas que dicte el Ministerio de Transportes y Telecomunicaciones, sin perjuicio de lo establecido en el Nº 26 del artículo 200 de la que será responsable el propietario del vehículo;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 11,
+    "texto": "Infringir las normas sobre transporte de pasajeros en los vehículos de carga;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 12,
+    "texto": "Negarse los conductores de vehículos de locomoción colectiva a transportar es colares;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 13,
+    "texto": "Infringir la prohibición de consumo de bebidas alcohólicas establecida en el inciso pr imero del artículo 110;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 14,
+    "texto": "Conducir bicicletas, motocicletas o vehículos similares, contraviniendo la norma sobre uso obligatorio de casco protector y demás elementos de seguridad. Asimismo, constituirá infracción la conducción de vehículos motorizados utilizando un casco que no cumpla con la obligación establecida en el artículo 80;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 15,
+    "texto": "No cumplir las obligaciones que impone el artí culo 176;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 16,
+    "texto": "Deteriorar o alterar cualquier señal de tránsito;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 17,
+    "texto": "Transita r un peatón por la calzada, por su derecha en los caminos o cruzar cualquier vía o calle fuera del paso para peatones o saltar vallas peatonales o pasar entre o sobre rejas u otros dispositivos existentes entre calzadas con tránsito opuesto;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 18,
+    "texto": "Infringir las normas sobre transporte terrestre dictadas por el Ministerio de Transportes y Telecomunicaciones;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 19,
+    "texto": "No cumplir el titular de una licenci a de conductor con las obligaciones establecidas en los artículos 19 y 24, o no dar cumplimiento a las demás obligaciones que se le hayan impuesto en la licencia para conducir;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 20,
+    "texto": "Arrojar desde un vehículo desperdicios, residuos, objetos o sustancias;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 21,
+    "texto": "Infringir lo dispuesto en el artículo 118;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 22,
+    "texto": "Conducir un vehículo de al quiler o de transporte colectivo de personas con materias peligrosas;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 23,
+    "texto": "Infringir l a obligación del propietario de dar cuenta al Registro de Vehículos Motorizados de todas las alteraciones en los vehículos que los hagan cambiar su naturaleza, sus características ese nciales, o que los identifican, como asimismo su abandono, destrucción o desarmaduría total o parcial;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 24,
+    "texto": "No conducir dentro de la pista de circulación demarcada o cambiar sorpresivamente de pista obstruyendo la circulación de otros vehículos;"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 25,
+    "texto": "Detener o estacionar un vehículo en contravenc ión a lo establecido en los números 6 y 7 del artículo 154 o estacionar en un paso para peatones, y"
+   },
+   {
+    "articulo": "201",
+    "gravedad": "menos_grave",
+    "numero": 26,
+    "texto": "Conducir un vehículo en alguna de las circuns tancias a que se refiere el número 11 del artículo 167."
+   }
+  ],
+  "notas": {
+   "200": [
+    "En los casos de las infracciones de los números 14, 16, 18, 21 y 24, si ellas fueran cometidas por un conductor de un vehículo destinado al transporte público de pasajeros o al transporte de carga y que no fuere el dueño, se le aplicará la pena correspondiente a una infracción leve y no se anotará en el Registro Nacional de Conductores, salvo en los casos establecidos en el Nº 38 de este artículo"
+   ]
+  }
+ }
 }
