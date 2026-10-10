@@ -46,6 +46,8 @@ dependencies:
   flutter_timezone: ^5.1.1
   pdfrx: ^2.6.5
   intl: ^0.20.3
+  screen_brightness: ^2.1.11
+  wakelock_plus: ^1.8.0
 
 dev_dependencies:
   flutter_test:

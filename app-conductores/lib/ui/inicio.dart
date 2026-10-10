@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../guantera/modelos.dart';
 import 'app_scope.dart';
 import 'documentos.dart';
+import 'fiscalizacion.dart';
 import 'oferta_boton.dart';
 import 'vehiculos.dart';
 
@@ -32,11 +33,33 @@ class _InicioState extends State<Inicio> {
           ),
         ],
       ),
-      body: switch (_tab) {
-        0 => const VehiculosPantalla(),
-        1 => const _DocumentosPersonales(),
-        _ => const _Vencimientos(),
-      },
+      body: Column(children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+          child: SizedBox(
+            width: double.infinity,
+            height: 56,
+            child: FilledButton.icon(
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+                foregroundColor: Theme.of(context).colorScheme.onError,
+                textStyle:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              onPressed: () => abrirFiscalizacion(context),
+              icon: const Icon(Icons.local_police),
+              label: const Text('MODO FISCALIZACIÓN'),
+            ),
+          ),
+        ),
+        Expanded(
+          child: switch (_tab) {
+            0 => const VehiculosPantalla(),
+            1 => const _DocumentosPersonales(),
+            _ => const _Vencimientos(),
+          },
+        ),
+      ]),
       floatingActionButton: switch (_tab) {
         0 => FloatingActionButton.extended(
             onPressed: () => Navigator.push(context,

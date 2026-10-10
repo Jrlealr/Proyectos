@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'dart:typed_data';
+
+import 'package:app_conductores/guantera/modelos.dart';
 import 'package:app_conductores/main.dart';
 import 'package:app_conductores/ofertas/motor_ofertas.dart';
 import 'package:app_conductores/ofertas/oferta.dart';
@@ -35,5 +38,29 @@ void main() {
     });
     await tester.pumpAndSettle();
     expect(find.text('ABCD12'), findsOneWidget);
+  });
+
+  testWidgets('modo fiscalización muestra el resumen y no ofertas', (tester) async {
+    final dir = Directory.systemTemp.createTempSync('guantera_fisc');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final (g, _, _) = (await tester
+        .runAsync(() => guanteraDePrueba(dir, DateTime(2026, 10, 10))))!;
+    await tester.runAsync(() async {
+      final v = await g.guardarVehiculo(patente: 'ABCD12', tipo: TipoVehiculo.auto);
+      await g.agregarDocumento(
+          tipo: TipoDocumento.soap, vehiculoId: v.id, bytes: Uint8List(3),
+          esPdf: true, nombreArchivo: 'x', vencimiento: DateTime(2026, 10, 1));
+    });
+
+    await tester.pumpWidget(AppConductores(
+        guantera: g, ofertas: MotorOfertas(ConfigOfertas.desactivada)));
+    await tester.tap(find.text('MODO FISCALIZACIÓN'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('ABCD12'), findsOneWidget);
+    expect(find.text('Resumen · 1/3'), findsOneWidget);
+    expect(find.text('Vencido el 01-10-2026'), findsOneWidget);
+    expect(find.text('No guardado en la app'), findsNWidgets(3));
+    expect(find.textContaining('app de Conaset'), findsOneWidget);
   });
 }
