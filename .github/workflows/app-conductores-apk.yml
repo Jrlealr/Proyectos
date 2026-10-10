@@ -1,0 +1,62 @@
+name: App Conductores - APK de prueba
+
+on:
+  push:
+    paths:
+      - "app-conductores/**"
+      - ".github/workflows/app-conductores-apk.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app-conductores
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.7
+          cache: true
+
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - run: flutter build apk --debug
+
+      - name: Guardar APK como artefacto
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-conductores-debug-apk
+          path: app-conductores/build/app/outputs/flutter-apk/app-debug.apk
+
+      # Publica el APK en una pre-release fija ("prueba-<rama>") para
+      # descargarlo directo desde el teléfono.
+      - name: Publicar en pre-release de prueba
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RAMA: ${{ github.ref_name }}
+        run: |
+          TAG="prueba-$(echo "$RAMA" | tr '/' '-')"
+          cp build/app/outputs/flutter-apk/app-debug.apk app-conductores.apk
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --prerelease --target "$GITHUB_SHA" \
+              --title "App Conductores - prueba ($RAMA)" \
+              --notes "APK de prueba (debug) generado automáticamente. No es una versión oficial."
+          fi
+          gh release upload "$TAG" app-conductores.apk --clobber
